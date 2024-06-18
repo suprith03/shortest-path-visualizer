@@ -1,0 +1,46 @@
+.node {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  border: 1px solid #575757;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 25px;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.node-start {
+  background-color: rgb(5, 155, 5);
+}
+
+.node-end {
+  background-color: red;
+}
+
+.node-wall {
+  background-color: rgb(255, 255, 255);
+}
+
+.node-visited {
+  background-color: rgb(203, 203, 203);
+}
+
+.node-path {
+  background-color: lightblue;
+  animation: path-animation 0.5s ease-out forwards; /* Add animation */
+}
+
+.step-number {
+  font-size: medium;
+  color: black; /* Color of the step number */
+}
+
+@keyframes path-animation {
+  0% {
+    background-color: lightblue;
+  }
+  100% {
+    background-color: yellow;
+  }
+}
