@@ -17,10 +17,10 @@
 .node-end {
   background-color: red;
 }
-
+/* 
 .node-wall {
   background-color: rgb(255, 255, 255);
-}
+} */
 
 .node-visited {
   background-color: rgb(203, 203, 203);
@@ -28,12 +28,12 @@
 
 .node-path {
   background-color: lightblue;
-  animation: path-animation 0.5s ease-out forwards; /* Add animation */
+  animation: path-animation 0.5s ease-out forwards; 
 }
 
 .step-number {
   font-size: medium;
-  color: black; /* Color of the step number */
+  color: black;
 }
 
 @keyframes path-animation {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
 import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
 import './App.css';
+import Modal from './components/Modal';
 
 const NUM_ROWS = 20;
 const NUM_COLS = 45;
@@ -37,6 +38,7 @@ const App = () => {
   const [grid, setGrid] = useState([]);
   const [startNode, setStartNode] = useState(null);
   const [endNode, setEndNode] = useState(null);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const initialGrid = createGrid();
@@ -75,7 +77,7 @@ const App = () => {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         node.isVisited = true;
-        setGrid([...grid]);
+        setGrid((prevGrid) => [...prevGrid]);
       }, 10 * i);
     }
   };
@@ -85,9 +87,9 @@ const App = () => {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         node.isPath = true;
-        node.stepNumber = i + 1; // Number the steps in the shortest path
-        setGrid([...grid]);
-      }, 100 * i); // Slow down the final path animation
+        node.stepNumber = i + 1;
+        setGrid((prevGrid) => [...prevGrid]);
+      }, 100 * i);
     }
   };
 
@@ -98,8 +100,13 @@ const App = () => {
     setEndNode(null);
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className="App">
+      {showModal && <Modal onClose={closeModal} />}
       <nav className="navbar">
         <h1 className="navbar-heading" onClick={resetGrid}>Shortest Path Finder Visualizer</h1>
       </nav>
