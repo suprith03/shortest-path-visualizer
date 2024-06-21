@@ -40,18 +40,18 @@
   
   .modal-content button {
     display: block;
-    margin: 20px auto 0; /* Center the button horizontally with top margin */
+    margin: 20px auto 0; 
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border: none;
-    background-color: #0077f7;
-    color: white;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
     border-radius: 8px;
     transition: background-color 0.3s ease;
   }
   
   .modal-content button:hover {
-    background-color: #005bb5;
+    background-color: #e3e3e3;
   }
   

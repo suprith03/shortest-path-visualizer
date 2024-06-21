@@ -9,9 +9,9 @@ const PathModal = ({ onClose, pathNodes }) => {
       <div className="modal-content">
         <h2 className="modal-heading">Shortest Path Found!</h2>
         <p>
-          The shortest path from the start to the end node has {pathLength} nodes
+          The shortest path from the start to the end node has {pathLength} nodes.
         </p>
-        <button onClick={onClose}>ok!</button>
+        <button onClick={onClose}>OK.</button>
       </div>
     </div>
   );
