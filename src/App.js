@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
+import Modal from './components/Modal'; 
+import PathModal from './components/PathModal'; 
 import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
 import './App.css';
-import Modal from './components/Modal';
 
 const NUM_ROWS = 20;
 const NUM_COLS = 45;
@@ -38,7 +39,9 @@ const App = () => {
   const [grid, setGrid] = useState([]);
   const [startNode, setStartNode] = useState(null);
   const [endNode, setEndNode] = useState(null);
-  const [showModal, setShowModal] = useState(true);
+  const [showIntroModal, setShowIntroModal] = useState(true); 
+  const [showPathModal, setShowPathModal] = useState(false); 
+  const [pathNodes, setPathNodes] = useState([]); 
 
   useEffect(() => {
     const initialGrid = createGrid();
@@ -77,20 +80,35 @@ const App = () => {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         node.isVisited = true;
-        setGrid((prevGrid) => [...prevGrid]);
+        setGrid([...grid]);
       }, 10 * i);
     }
   };
 
   const animateShortestPath = (nodesInShortestPathOrder) => {
-    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+    const pathNodesCopy = [...nodesInShortestPathOrder];
+    for (let i = 0; i < pathNodesCopy.length; i++) {
       setTimeout(() => {
-        const node = nodesInShortestPathOrder[i];
+        const node = pathNodesCopy[i];
         node.isPath = true;
-        node.stepNumber = i + 1;
-        setGrid((prevGrid) => [...prevGrid]);
-      }, 100 * i);
+        node.stepNumber = i + 1; 
+        setGrid([...grid]);
+        if (i === pathNodesCopy.length - 1) {
+          setTimeout(() => {
+            setShowPathModal(true); 
+            setPathNodes(pathNodesCopy);
+          }, 1000); 
+        }
+      }, 100 * i); 
     }
+  };
+
+  const closeIntroModal = () => {
+    setShowIntroModal(false);
+  };
+
+  const closePathModal = () => {
+    setShowPathModal(false);
   };
 
   const resetGrid = () => {
@@ -98,15 +116,12 @@ const App = () => {
     setGrid(newGrid);
     setStartNode(null);
     setEndNode(null);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
+    // setShowIntroModal(true); // Show intro modal again on reset
+    setShowPathModal(false);
   };
 
   return (
     <div className="App">
-      {showModal && <Modal onClose={closeModal} />}
       <nav className="navbar">
         <h1 className="navbar-heading" onClick={resetGrid}>Shortest Path Finder Visualizer</h1>
       </nav>
@@ -117,6 +132,20 @@ const App = () => {
         <button onClick={visualizeDijkstra}>Visualize Dijkstra's Algorithm</button>
         <button onClick={resetGrid}>Reset</button>
       </div>
+      
+      {showIntroModal && (
+        <Modal onClose={closeIntroModal} />
+      )}
+      {showPathModal && (
+        <PathModal
+          onClose={closePathModal}
+          pathNodes={pathNodes}
+        />
+      )}
+
+      {(showIntroModal || showPathModal) && (
+        <div className="overlay"></div>
+      )}
     </div>
   );
 };
