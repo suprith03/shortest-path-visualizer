@@ -17,10 +17,10 @@
 .node-end {
   background-color: red;
 }
-/* 
+
 .node-wall {
-  background-color: rgb(255, 255, 255);
-} */
+  background-color: rgb(0, 0, 0);
+}
 
 .node-visited {
   background-color: rgb(203, 203, 203);

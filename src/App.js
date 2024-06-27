@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
-import Modal from './components/Modal'; 
-import PathModal from './components/PathModal'; 
+import Modal from './components/Modal';
+import PathModal from './components/PathModal';
 import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
 import './App.css';
 
@@ -39,16 +39,17 @@ const App = () => {
   const [grid, setGrid] = useState([]);
   const [startNode, setStartNode] = useState(null);
   const [endNode, setEndNode] = useState(null);
-  const [showIntroModal, setShowIntroModal] = useState(true); 
-  const [showPathModal, setShowPathModal] = useState(false); 
-  const [pathNodes, setPathNodes] = useState([]); 
+  const [isMousePressed, setIsMousePressed] = useState(false);
+  const [showIntroModal, setShowIntroModal] = useState(true);
+  const [showPathModal, setShowPathModal] = useState(false);
+  const [pathNodes, setPathNodes] = useState([]);
 
   useEffect(() => {
     const initialGrid = createGrid();
     setGrid(initialGrid);
   }, []);
 
-  const handleNodeClick = (node) => {
+  const handleMouseDown = (node) => {
     if (!startNode) {
       node.isStart = true;
       setStartNode(node);
@@ -59,6 +60,18 @@ const App = () => {
       node.isWall = !node.isWall;
     }
     setGrid([...grid]);
+    setIsMousePressed(true);
+  };
+
+  const handleMouseEnter = (node) => {
+    if (!isMousePressed) return;
+    if (!startNode || !endNode || node.isStart || node.isEnd) return;
+    node.isWall = true;
+    setGrid([...grid]);
+  };
+
+  const handleMouseUp = () => {
+    setIsMousePressed(false);
   };
 
   const visualizeDijkstra = () => {
@@ -91,15 +104,15 @@ const App = () => {
       setTimeout(() => {
         const node = pathNodesCopy[i];
         node.isPath = true;
-        node.stepNumber = i + 1; 
+        node.stepNumber = i + 1;
         setGrid([...grid]);
         if (i === pathNodesCopy.length - 1) {
           setTimeout(() => {
-            setShowPathModal(true); 
+            setShowPathModal(true);
             setPathNodes(pathNodesCopy);
           }, 1000); 
         }
-      }, 100 * i); 
+      }, 100 * i);
     }
   };
 
@@ -116,7 +129,7 @@ const App = () => {
     setGrid(newGrid);
     setStartNode(null);
     setEndNode(null);
-    // setShowIntroModal(true); // Show intro modal again on reset
+    // setShowIntroModal(true);
     setShowPathModal(false);
   };
 
@@ -126,26 +139,20 @@ const App = () => {
         <h1 className="navbar-heading" onClick={resetGrid}>Shortest Path Finder Visualizer</h1>
       </nav>
       <div className="grid-container">
-        <Grid grid={grid} onNodeClick={handleNodeClick} />
+        <Grid
+          grid={grid}
+          onNodeClick={handleMouseDown}
+          onNodeEnter={handleMouseEnter}
+          onNodeUp={handleMouseUp}
+        />
       </div>
       <div className="buttons">
         <button onClick={visualizeDijkstra}>Visualize Dijkstra's Algorithm</button>
         <button onClick={resetGrid}>Reset</button>
       </div>
-      
-      {showIntroModal && (
-        <Modal onClose={closeIntroModal} />
-      )}
-      {showPathModal && (
-        <PathModal
-          onClose={closePathModal}
-          pathNodes={pathNodes}
-        />
-      )}
-
-      {(showIntroModal || showPathModal) && (
-        <div className="overlay"></div>
-      )}
+      {showIntroModal && <Modal onClose={closeIntroModal} />}
+      {showPathModal && <PathModal onClose={closePathModal} pathNodes={pathNodes} />}
+      {(showIntroModal || showPathModal) && <div className="overlay"></div>}
     </div>
   );
 };

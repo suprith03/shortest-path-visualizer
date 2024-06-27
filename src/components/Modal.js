@@ -13,6 +13,7 @@ const Modal = ({ onClose }) => {
         <ol>
           <li>Click on a cell to set the start point.</li>
           <li>Click on another cell to set the end point.</li>
+          <li>Drag mouse to create walls.</li>
           <li>Click "Visualize Dijkstra's Algorithm" to see the shortest path.</li>
           <li>Click "Reset" to start over.</li>
         </ol>

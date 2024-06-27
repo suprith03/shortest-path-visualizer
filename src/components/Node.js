@@ -1,7 +1,7 @@
 import React from 'react';
 import './Node.css';
 
-const Node = ({ node, onNodeClick }) => {
+const Node = ({ node, onMouseDown, onMouseEnter, onMouseUp }) => {
   const { row, col, isStart, isEnd, isWall, isVisited, isPath, stepNumber } = node;
   const extraClassName = isStart
     ? 'node-start'
@@ -19,7 +19,9 @@ const Node = ({ node, onNodeClick }) => {
     <div
       id={`node-${row}-${col}`}
       className={`node ${extraClassName}`}
-      onClick={onNodeClick}
+      onMouseDown={onMouseDown}
+      onMouseEnter={onMouseEnter}
+      onMouseUp={onMouseUp}
     >
       {isPath && <span className="step-number">{stepNumber}</span>}
     </div>
