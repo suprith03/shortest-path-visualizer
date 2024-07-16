@@ -1,3 +1,16 @@
+# Shortest Pathfinder
+
+## Overview
+It uses dijkstra Algorithm to find the Shortest Path
+
+## Screenshots
+
+### Home Page
+![Home Page](./screenshots/ss.png)
+
+### Feature 1
+![Feature 1](./screenshots/ss1.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
