@@ -5,8 +5,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
-  backdrop-filter: blur(5px); 
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 }
 
 .modal {
@@ -34,7 +34,7 @@
 }
 
 .modal-heading {
-  text-align: center; 
+  text-align: center;
 }
 
 .modal-content h3 {
@@ -53,18 +53,35 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  border: none;
-  background-color: #0077f7;
+  background-color: black;
   color: white;
   border-radius: 8px;
   transition: background-color 0.3s ease;
   margin-top: 20px;
-  display: block; 
-  margin-left: auto; 
+  display: block;
+  margin-left: auto;
   margin-right: auto;
 }
 
 .modal-content button:hover {
   color: black;
-  background-color: rgb(222, 222, 222);
+  background-color: transparent;
+  border: 2px solid #000000;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+  }
+
+  .modal-content button {
+    width: 100%;
+    padding: 10px;
+  }
 }
