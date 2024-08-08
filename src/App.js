@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
 import Modal from './components/Modal';
 import PathModal from './components/PathModal';
-import { dijkstra, getNodesInShortestPathOrder } from './algorithms/dijkstra';
+import { bfs, getNodesInShortestPathOrder as getBFSPath } from './algorithms/bfs';
+import { dijkstra, getNodesInShortestPathOrder as getDijkstraPath } from './algorithms/dijkstra';
 import './App.css';
 
 const NUM_ROWS = 20;
@@ -74,19 +75,27 @@ const App = () => {
     setIsMousePressed(false);
   };
 
+  const visualizeBFS = () => {
+    if (!startNode || !endNode) return;
+    const newGrid = [...grid];
+    const visitedNodesInOrder = bfs(newGrid, startNode, endNode);
+    const nodesInShortestPathOrder = getBFSPath(endNode);
+    animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, 'bfs');
+  };
+
   const visualizeDijkstra = () => {
     if (!startNode || !endNode) return;
     const newGrid = [...grid];
     const visitedNodesInOrder = dijkstra(newGrid, startNode, endNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
-    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    const nodesInShortestPathOrder = getDijkstraPath(endNode);
+    animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, 'dijkstra');
   };
 
-  const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {
+  const animateAlgorithm = (visitedNodesInOrder, nodesInShortestPathOrder, algorithm) => {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
-          animateShortestPath(nodesInShortestPathOrder);
+          animateShortestPath(nodesInShortestPathOrder, algorithm);
         }, 10 * i);
         return;
       }
@@ -98,30 +107,23 @@ const App = () => {
     }
   };
 
-  const animateShortestPath = (nodesInShortestPathOrder) => {
+  const animateShortestPath = (nodesInShortestPathOrder, algorithm) => {
     const pathNodesCopy = [...nodesInShortestPathOrder];
     for (let i = 0; i < pathNodesCopy.length; i++) {
       setTimeout(() => {
         const node = pathNodesCopy[i];
         node.isPath = true;
         node.stepNumber = i + 1;
+        node.algorithm = algorithm; // Track which algorithm was used
         setGrid([...grid]);
         if (i === pathNodesCopy.length - 1) {
           setTimeout(() => {
             setShowPathModal(true);
             setPathNodes(pathNodesCopy);
-          }, 1000); 
+          }, 1000);
         }
       }, 100 * i);
     }
-  };
-
-  const closeIntroModal = () => {
-    setShowIntroModal(false);
-  };
-
-  const closePathModal = () => {
-    setShowPathModal(false);
   };
 
   const resetGrid = () => {
@@ -129,7 +131,14 @@ const App = () => {
     setGrid(newGrid);
     setStartNode(null);
     setEndNode(null);
-    // setShowIntroModal(true);
+    setShowPathModal(false);
+  };
+
+  const closeIntroModal = () => {
+    setShowIntroModal(false);
+  };
+
+  const closePathModal = () => {
     setShowPathModal(false);
   };
 
@@ -147,7 +156,8 @@ const App = () => {
         />
       </div>
       <div className="buttons">
-        <button onClick={visualizeDijkstra}>Visualize Dijkstra's Algorithm</button>
+        <button onClick={visualizeBFS}>Visualize BFS Algorithm</button>
+        <button onClick={visualizeDijkstra}>Visualize Dijkstra Algorithm</button>
         <button onClick={resetGrid}>Reset</button>
       </div>
       {showIntroModal && <Modal onClose={closeIntroModal} />}

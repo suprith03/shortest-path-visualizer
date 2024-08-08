@@ -4,10 +4,7 @@ import './Grid.css';
 
 const Grid = ({ grid, onNodeClick, onNodeEnter, onNodeUp }) => {
   return (
-    <div
-      className="grid"
-      onMouseLeave={onNodeUp} 
-    >
+    <div className="grid" onMouseLeave={onNodeUp}>
       {grid.map((row, rowIdx) => (
         <div key={rowIdx} className="grid-row">
           {row.map((node, nodeIdx) => (

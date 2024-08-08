@@ -1,17 +1,13 @@
 .node {
   width: 25px;
   height: 25px;
+  border: 1px solid black;
   display: inline-block;
-  border: 1px solid #575757;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 25px;
-  font-size: 12px;
-  transition: background-color 0.3s ease;
+  margin: 1px;
 }
 
 .node-start {
-  background-color: rgb(5, 155, 5);
+  background-color: green;
 }
 
 .node-end {
@@ -19,22 +15,21 @@
 }
 
 .node-wall {
-  background-color: rgb(0, 0, 0);
+  background-color: black;
 }
 
 .node-visited {
-  background-color: rgb(203, 203, 203);
-}
-
-.node-path {
   background-color: lightblue;
-  animation: path-animation 0.5s ease-out forwards;
 }
 
-.step-number {
-  font-size: medium;
-  color: black;
+.node-path-bfs {
+  background-color: orange;
 }
+
+.node-path-dijkstra {
+  background-color: yellow;
+}
+
 
 @keyframes path-animation {
   0% {
@@ -45,21 +40,3 @@
   }
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-  .node {
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .node {
-    width: 15px;
-    height: 15px;
-    line-height: 15px;
-    font-size: 8px;
-  }
-}

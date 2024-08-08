@@ -68,20 +68,3 @@
   background-color: transparent;
   border: 2px solid #000000;
 }
-
-@media (max-width: 768px) {
-  .modal-content {
-    width: 90%;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal-content {
-    width: 95%;
-  }
-
-  .modal-content button {
-    width: 100%;
-    padding: 10px;
-  }
-}
