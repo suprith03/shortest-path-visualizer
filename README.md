@@ -1,7 +1,7 @@
 # Shortest Pathfinder
 
 ## Overview
-It uses dijkstra Algorithm to find the Shortest Path
+It uses dijkstra Algorithm to find the Shortest Path (Bascially BFS without weights)
 
 ## Screenshots
 

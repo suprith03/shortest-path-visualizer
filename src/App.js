@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
 import Modal from './components/Modal';
 import PathModal from './components/PathModal';
-import { bfs, getNodesInShortestPathOrder as getBFSPath } from './algorithms/bfs';
 import { dijkstra, getNodesInShortestPathOrder as getDijkstraPath } from './algorithms/dijkstra';
 import './App.css';
 
@@ -75,14 +74,6 @@ const App = () => {
     setIsMousePressed(false);
   };
 
-  const visualizeBFS = () => {
-    if (!startNode || !endNode) return;
-    const newGrid = [...grid];
-    const visitedNodesInOrder = bfs(newGrid, startNode, endNode);
-    const nodesInShortestPathOrder = getBFSPath(endNode);
-    animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, 'bfs');
-  };
-
   const visualizeDijkstra = () => {
     if (!startNode || !endNode) return;
     const newGrid = [...grid];
@@ -114,7 +105,7 @@ const App = () => {
         const node = pathNodesCopy[i];
         node.isPath = true;
         node.stepNumber = i + 1;
-        node.algorithm = algorithm; // Track which algorithm was used
+        node.algorithm = algorithm;
         setGrid([...grid]);
         if (i === pathNodesCopy.length - 1) {
           setTimeout(() => {
@@ -156,7 +147,6 @@ const App = () => {
         />
       </div>
       <div className="buttons">
-        <button onClick={visualizeBFS}>Visualize BFS Algorithm</button>
         <button onClick={visualizeDijkstra}>Visualize Dijkstra Algorithm</button>
         <button onClick={resetGrid}>Reset</button>
       </div>

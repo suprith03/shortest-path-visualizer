@@ -22,10 +22,6 @@
   background-color: lightblue;
 }
 
-.node-path-bfs {
-  background-color: orange;
-}
-
 .node-path-dijkstra {
   background-color: yellow;
 }

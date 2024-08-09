@@ -14,7 +14,7 @@ const Modal = ({ onClose }) => {
           <li>Click on a cell to set the start point.</li>
           <li>Click on another cell to set the end point.</li>
           <li>Drag mouse to create walls.</li>
-          <li>Click "Visualize BFS/Dijkstra Algorithm" to see the shortest path.</li>
+          <li>Click "Visualize Dijkstra Algorithm" to see the shortest path.(Basically BFS)</li>
           <li>Click "Reset" to start over.</li>
         </ol>
         <button onClick={onClose}>Got it!</button>
